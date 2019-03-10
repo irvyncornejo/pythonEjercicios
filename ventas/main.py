@@ -1,29 +1,31 @@
 import sys
 
-clients = 'Irvyn, Erica, David'
+# clients = 'Erica, Irvyn, David' cambiamos el tipo de dato que almacena los nombres de los clientes
+
+clients = ['Erica', 'Irvyn']
 
 def create_client(client_name):
     global clients # para evitar errores hacemos la varible de tipo global, con "global" para usarla dentro de la funcion
     
     if client_name not in clients: #not in operador para checar si está  dentro de la  lista de clientes
-        _add_comma()
-        clients += client_name
-        _add_comma()
+        clients.append(client_name)
+        
     else:
         print('Client already is in clien\'s list')
 
 
 def list_clients():# mostrar lista de clientes
     global clients
-
-    print(clients)
+    for idx, client in enumerate (clients): # Está linea nos ayuda a daber el indece de los clientes 
+        print(f'{idx}: {client}')# Mostrara el nombre y el id. correspondiente 
 
 
 def update_client(client_name, update_client_name):#actualizacion de clientes
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',', update_client_name + ',')
+        index = clients.index(client_name) # obtenemos el valor del index, para despues reasignarlo
+        clients[index] = updated_name
         
     else:
         _not_client()
@@ -31,8 +33,6 @@ def update_client(client_name, update_client_name):#actualizacion de clientes
 def search_client(client_name): #busqueda de clientes
     global clients
 
-    clients = clients.split(',') # esta linea nos ayuda a separar el str despues de las comas.
-    # client es unicamente es iterador por eso no está declarado como variables, es parte del for
     for client in clients: # Busca el cliente en la lista de clientes
         if client != client_name: # si el cliente buscado es diferente al nombre del cliente dentro de  la lista 
             continue # haz lo que sigue
@@ -45,15 +45,9 @@ def delete_client(client_name): #Borrar cliente
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',' , '')
+        clients.remove(client_name) # Removemos el nombre del cliente en la lista por medio del valor del nombre
     else:
          _not_client()
-
-
-def _add_comma():
-    global clients
-
-    clients+= ', '
 
 
 def _print_welcom():
@@ -61,7 +55,7 @@ def _print_welcom():
     print('/*' * 50)
     print('What would you like to do today?')
     print('[C]reate client')
-    print('[L]reate client')
+    print('[R]ead client')
     print('[U]pdate client')
     print('[D]elete client')
     print ('[S]earch client')
@@ -94,7 +88,7 @@ if __name__ == '__main__': # Aqui comienza nuestro codigo
         create_client(client_name)
         list_clients()
 
-    elif command == 'L':
+    elif command == 'R':
         list_clients()
 
     elif command == 'D':
